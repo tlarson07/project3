@@ -5,6 +5,15 @@
 
 puzzle = [[0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24]]
 
+def initializePuzzle():
+    """
+    returns puzzle filled with zeros
+
+    """
+    puzzle = []
+    row = [0 for a in range(5)]
+    return[row for b in range(5)]
+
 def check_valid(puzzel,cages):
     pass
 
@@ -14,16 +23,34 @@ def check_cages_valid(puzzle,cages):
 def check_columns_valid(puzzle):
     pass
 
-def check_columm_valid(puzzle): 
+def checkColummValid(puzzle):
     pass
 
 def check_rows_valid(puzzle):
-    pass
+    for row in range(len(puzzle)):
+        if checkRowValid(puzzle, row) == False:
+            return(False)
+    return(True)
 
-def check_row_valid(puzzle):
-    pass
 
-def get_cages(): #FIGURE OUT HOW TO TEST THIS!!!!!
+def checkRowValid(puzzle, rowIndex):
+    """
+    returns True if no duplicates in a single row
+
+    Arguments:
+    puzzle -- (list of lists)
+    row    -- (list) of numbers from puzzle
+    """
+    numCounter = dict()
+    row = puzzle[rowIndex]
+    for i in row:
+        numCounter[i] = numCounter.get(i,0) + 1
+    for i in numCounter:
+        if numCounter[i] > 1:
+            return(False)
+    return(True)
+
+def get_cages():
     """
     returns list of cages
 
