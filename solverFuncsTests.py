@@ -34,8 +34,6 @@ class TestCase(unittest.TestCase):
     def test_check_columns_valid_Duplicates_False_2(self):
         self.assertFalse(check_columns_valid(puzzle3))
 
-    def test_checkCageValid_UnderSum_True_1(self):
-        self.assertTrue(checkCageValid(puzzle4, 0))
 
 
 # Run the unit tests.

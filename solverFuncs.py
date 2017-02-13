@@ -90,16 +90,23 @@ def check_rows_valid(puzzle):
             return(False)
     return(True)
 
-def checkCageValid(puzzle, cages, cageIndex=0):
-    cage = cages[cageIndex]
+def checkCageValid(puzzle, cages, cellIndex):
+    """
+    returns True if sum of cage's cells are less than or equal to the required sum
+
+    Arguments :
+    puzzle    -- (list of lists)
+    cages     -- (list of lists) cage contains: sum, numCells, cellIndexes
+    cellIndex -- (int) between 0 and numCages
+    """
+    cage = cages[cellIndex]
     cageSum = cage[0]
     cageSumTest = 0
     for i in cage[2:]:
         cageSumTest += cellLocation(puzzle, i)
     if cageSum >= cageSumTest:
         return(True)
-    else:
-        return(False)
+    return(False)
 
 def check_cages_valid(puzzle,cages):
     for i in range(len(cages)):
@@ -107,7 +114,15 @@ def check_cages_valid(puzzle,cages):
             return(False)
     return(True)
 
-def check_valid(puzzel,cages):
+def check_valid(puzzle,cages):
+    """
+    returns True if puzzle is still valid for the following: row, columns, and cages
+
+    Arguments :
+    puzzle    -- (list of lists)
+    cages     -- (list of lists) cage contains: sum, numCells, cellIndexes
+    """
     if check_cages_valid(puzzle,cages) and check_rows_valid(puzzle) and check_columns_valid(puzzle) == True:
         return(True)
-    return(False)
+    else:
+        return(False)
