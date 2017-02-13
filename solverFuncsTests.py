@@ -4,6 +4,7 @@ from solverFuncs import *
 puzzle1 = [[0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24]] #no duplicates
 puzzle2 = [[0,1,2,3,4],[6,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24]] #duplicate at index puzzle2[1][0]
 puzzle3 = [[0,1,2,3,4],[0,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24]] #duplicate at index puzzle3[1][0]
+puzzle4 = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]] #initializePuzzle
 
 class TestCase(unittest.TestCase):
     def test_cellLocation_CorrectIndex_CorrectCell_1(self):
@@ -33,6 +34,10 @@ class TestCase(unittest.TestCase):
     def test_check_columns_valid_Duplicates_False_2(self):
         self.assertFalse(check_columns_valid(puzzle3))
 
-# Run the unit tests. 
+    def test_checkCageValid_UnderSum_True_1(self):
+        self.assertTrue(checkCageValid(puzzle4, 0))
+
+
+# Run the unit tests.
 if __name__ == '__main__':
    unittest.main()

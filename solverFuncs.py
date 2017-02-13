@@ -90,8 +90,24 @@ def check_rows_valid(puzzle):
             return(False)
     return(True)
 
+def checkCageValid(puzzle, cages, cageIndex=0):
+    cage = cages[cageIndex]
+    cageSum = cage[0]
+    cageSumTest = 0
+    for i in cage[2:]:
+        cageSumTest += cellLocation(puzzle, i)
+    if cageSum >= cageSumTest:
+        return(True)
+    else:
+        return(False)
+
 def check_cages_valid(puzzle,cages):
-    pass
+    for i in range(len(cages)):
+        if checkCageValid(puzzle, cages, i) == False:
+            return(False)
+    return(True)
 
 def check_valid(puzzel,cages):
-    pass
+    if check_cages_valid(puzzle,cages) and check_rows_valid(puzzle) and check_columns_valid(puzzle) == True:
+        return(True)
+    return(False)
