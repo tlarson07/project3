@@ -3,16 +3,14 @@
 #Project3
 #Julie Workman
 
-puzzle = [[0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24]]
+#puzzle = [[0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24]]
 
 def initializePuzzle():
     """
     returns puzzle filled with zeros
 
     """
-    puzzle = []
-    row = [0 for a in range(5)]
-    return([row for b in range(5)])
+    return([[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]])
 
 def get_cages():
     """
@@ -27,9 +25,9 @@ def get_cages():
         cages.append([int(i) for i in cage]) #addes user input to a list, casting each num as an int, and adds that list to cages
     return(cages)
 
-def cellLocation(puzzle, cellIndex):
+def getCellValue(puzzle, cellIndex):
     """
-    returns cell for for given cell index
+    returns cell value for given cell index
 
     Arguments:
     puzzle -- (list of lists)
@@ -39,6 +37,12 @@ def cellLocation(puzzle, cellIndex):
     col = cellIndex % 5
 
     return(puzzle[row][col])
+
+def updatePuzzle(puzzle, cellValue, cellIndex):
+    row = cellIndex // 5
+    col = cellIndex % 5
+    puzzle[row][col] = cellValue
+    return(puzzle)
 
 def checkColummValid(puzzle, columnIndex):
     """
@@ -54,6 +58,8 @@ def checkColummValid(puzzle, columnIndex):
         col.append(puzzle[i][columnIndex])
 
     for i in col:
+        if i < 1:
+            continue
         numCounter[i] = numCounter.get(i,0) + 1 #creates a dictionary representing the number of occurances for each number in a list
     for i in numCounter:
         if numCounter[i] > 1: #if the number of occurances is greater than one
@@ -78,6 +84,8 @@ def checkRowValid(puzzle, rowIndex):
     row = puzzle[rowIndex]
 
     for i in row:
+        if i < 1:
+            continue
         numCounter[i] = numCounter.get(i,0) + 1 #creates a dictionary representing the number of occurances for each number in a list
     for i in numCounter:
         if numCounter[i] > 1: #if the number of occurances is greater than one
@@ -103,7 +111,7 @@ def checkCageValid(puzzle, cages, cellIndex):
     cageSum = cage[0]
     cageSumTest = 0
     for i in cage[2:]:
-        cageSumTest += cellLocation(puzzle, i)
+        cageSumTest += getCellValue(puzzle, i)
     if cageSum >= cageSumTest:
         return(True)
     return(False)
@@ -124,5 +132,10 @@ def check_valid(puzzle,cages):
     """
     if check_cages_valid(puzzle,cages) and check_rows_valid(puzzle) and check_columns_valid(puzzle) == True:
         return(True)
-    else:
-        return(False)
+    return(False)
+
+def checkZeros(puzzle):
+    for row in puzzle:
+        if 0 in row:
+            return(False)
+    return(True)
