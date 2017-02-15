@@ -46,7 +46,7 @@ def updatePuzzle(puzzle, cellValue, cellIndex):
 
 def checkColummValid(puzzle, columnIndex):
     """
-    returns True is no duplicates in a single column
+    returns True if no duplicates in a single column
 
     Arguments
     puzzle -- (list of lists)
@@ -98,23 +98,32 @@ def check_rows_valid(puzzle):
             return(False)
     return(True)
 
-def checkCageValid(puzzle, cages, cellIndex):
+def checkCageValid(puzzle, cages, cageIndex):
     """
     returns True if sum of cage's cells are less than or equal to the required sum
 
     Arguments :
     puzzle    -- (list of lists)
-    cages     -- (list of lists) cage contains: sum, numCells, cellIndexes
-    cellIndex -- (int) between 0 and numCages
+    cages     -- (list of lists) cage contains: sum, numCells, cageIndex
+    cageIndex -- (int) between 0 and numCages
     """
-    cage = cages[cellIndex]
+    cage = cages[cageIndex]
     cageSum = cage[0]
+    puzzleIndexes = cage[2:]
+    puzzleValues = [getCellValue(puzzle, i) for i in puzzleIndexes]
     cageSumTest = 0
-    for i in cage[2:]:
-        cageSumTest += getCellValue(puzzle, i)
-    if cageSum >= cageSumTest:
+
+    for cellIndex in puzzleIndexes: #sum of cage
+        cageSumTest += getCellValue(puzzle, cellIndex)
+
+    if checkZeros(puzzleValues) == True and cageSum == cageSumTest:
         return(True)
-    return(False)
+    elif checkZeros(puzzleValues) == False and cageSumTest < cageSum:
+        return(True)
+    else:
+        return(False)
+
+
 
 def check_cages_valid(puzzle,cages):
     for i in range(len(cages)):
@@ -135,7 +144,16 @@ def check_valid(puzzle,cages):
     return(False)
 
 def checkZeros(puzzle):
-    for row in puzzle:
-        if 0 in row:
+    """
+    returns True if puzzle contains no zeros
+    """
+    for i in puzzle:
+        if i == 0:
             return(False)
     return(True)
+
+def printPuzzle(puzzle):
+    for row in puzzle:
+        for cell in row:
+            print(cell,"",end="")
+        print()

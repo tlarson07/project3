@@ -12,26 +12,24 @@ def main():
     checks = 0
     backtracks = 0
 
-    while check_valid(puzzle,cages) and checkZeros(puzzle) == False:
-        checks += 1
+    while cellIndex < 25:
         cellValue = getCellValue(puzzle, cellIndex) + 1
         puzzle = updatePuzzle(puzzle,cellValue,cellIndex)
-        while check_valid(puzzle, cages) == False and cellValue <=5:
-            cellValue = getCellValue(puzzle, cellIndex) + 1
-            puzzle = updatePuzzle(puzzle,cellValue,cellIndex)
-        if cellValue > 5:
-            puzzle = updatePuzzle(puzzle,0,cellIndex)
-            cellIndex -= 1
-            backtracks += 1
-            continue
-        cellIndex +=1
+        printPuzzle(puzzle)
+        checks +=1
 
+        if check_valid(puzzle, cages) == True: #move to next index
+            cellIndex += 1
+        else:
+            while cellValue >= 5: #backtracking
+                printPuzzle(puzzle)
+                puzzle = updatePuzzle(puzzle,0,cellIndex)
+                cellIndex -= 1
+                backtracks += 1
+                cellValue = getCellValue(puzzle, cellIndex)
 
     print("\n---Solution---\n")
-    for row in puzzle:
-        for i in row:
-            print(i, "", end ="")
-        print()
+    printPuzzle(puzzle)
     print()
     print("checks:", checks, "backtracks", backtracks)
 
